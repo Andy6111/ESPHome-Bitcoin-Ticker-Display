@@ -70,8 +70,7 @@ sensor:
 ## Backlight 
 ESPHOME creates an entity in Home Assistant that can be used to control the brightness of the display, or turn it off with a schedule etc.
 
-
-![Image](https://github.com/users/Andy6111/projects/1/assets/57748859/1a028b75-b35f-4791-b27e-66b7a3b1987f)
+<img src="https://github.com/Andy6111/ESPHome-Bitcoin-Ticker-Display/blob/main/esphome_backlight.jpg" width=50% height=50%>
 
 ## Customization 
 
