@@ -1,0 +1,124 @@
+esphome:
+  name: bitcoin_ticker
+  friendly_name: Bitcoin Ticker
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: ""
+
+ota:
+  password: ""
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "BTC Fallback Hotspot"
+    password: ""
+
+captive_portal:
+
+display:
+  - platform: ili9xxx
+    model: TFT 2.4R
+    color_order: RGB
+    cs_pin: 13
+    dc_pin: 14
+    reset_pin: 33 
+    lambda: |-
+      it.printf(10, 100, id(my_font3), id(my_green), "BTC-EUR: %.0f%", id(btc_eur).state);
+      it.printf(10, 126, id(my_font), id(my_blue), "1h change: %.1f%%", id(btc_eur_1h).state);
+      it.printf(10, 151, id(my_font), id(my_red), "24h change: %.1f%%", id(btc_eur_24h).state);
+      std::string val = to_string(id(btc_eur_last_update).state);
+      it.printf(10, 176, id(my_font), id(my_yellow), "Updated: %s",id(btc_eur_last_update).state.c_str());
+      it.image(120, 20, id(bitcoin));
+      it.strftime(120, 211, id(my_font2), "%H:%M", id(esptime).now());
+
+font:
+  - file: "fonts/arial.ttf"
+    id: my_font
+    size: 24
+
+  - file: "fonts/arial.ttf"
+    id: my_font2
+    size: 20
+
+  - file: "fonts/arial.ttf"
+    id: my_font3
+    size: 26
+
+color:
+  - id: my_green
+    hex: 3CFF33
+  - id: my_red
+    hex: cc0000
+  - id: my_yellow
+    hex: f1c232
+  - id: my_blue
+    hex: 3633FF 
+
+spi:
+  clk_pin: 26
+  mosi_pin: 27
+  #miso_pin: GPIO12
+
+light:
+  - platform: monochromatic
+    output: gpio_25_backlight_pwm
+    name: "ILI9341 Display Backlight"
+    id: back_light
+    restore_mode: ALWAYS_ON
+
+output:
+  - platform: ledc
+    pin: 25
+    id: gpio_25_backlight_pwm
+
+time:
+  - platform: homeassistant
+    id: esptime
+
+sensor:
+  - platform: homeassistant
+    id: btc_eur
+    entity_id: sensor.cryptoinfo_main_bitcoin_eur
+    accuracy_decimals: 0
+    unit_of_measurement: "EUR"
+    internal: true
+
+  - platform: homeassistant
+    id: btc_eur_24h
+    entity_id: sensor.cryptoinfo_main_bitcoin_eur_24h_change
+    accuracy_decimals: 0
+    unit_of_measurement: "%"
+    internal: true
+
+  - platform: homeassistant
+    id: btc_eur_1h
+    entity_id: sensor.cryptoinfo_main_bitcoin_eur_1h_change
+    accuracy_decimals: 0
+    unit_of_measurement: "%"
+    internal: true
+
+text_sensor:
+  - platform: homeassistant
+    id: btc_eur_last_update
+    entity_id: sensor.cryptoinfo_main_bitcoin_eur_last_update
+    internal: true
+
+image:
+  - file: "bitcoin.png"
+    id: bitcoin
+    type: RGBA
+    resize: 64x64
