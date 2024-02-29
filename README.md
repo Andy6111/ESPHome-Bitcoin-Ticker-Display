@@ -1,6 +1,6 @@
 # ESPHome Bitcoin Ticker Display
 
-**Useful and cheap crypto ticker for DYI projects. Its also easy customizable to different crypto.**  
+**Useful and cheap crypto ticker for DYI projects. Its easily customizable to different crypto.**  
 
 <img src="https://github.com/users/Andy6111/projects/1/assets/57748859/e0e2d2bd-318e-4364-97e2-3a3a1674b54d" width=50% height=50% >
 
