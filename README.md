@@ -2,7 +2,7 @@
 
 **Useful and cheap crypto ticker for DYI projects. Its easily customizable to different crypto.**  
 
-<img src="https://github.com/Andy6111/ESPHome-Bitcoin-Ticker-Display/blob/main/ticker_display.jpg)" width=50% height=50% >
+<img src="https://github.com/Andy6111/ESPHome-Bitcoin-Ticker-Display/blob/main/ticker_display.jpg" width=50% height=50% >
 
 ## Main features: 
 
